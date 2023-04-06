@@ -9,7 +9,7 @@ public class AdditionalString {
   private final String value;
 
   AdditionalString(String value) {
-    this.value = nullControlFactory(value);
+    this.value = emptyIfNull(value);
   }
 
   public String[] split() {
@@ -27,7 +27,7 @@ public class AdditionalString {
     return target.split(delimiter);
   }
 
-  private String nullControlFactory(String value) {
+  private String emptyIfNull(String value) {
     if (value == null) return "";
 
     return value;
