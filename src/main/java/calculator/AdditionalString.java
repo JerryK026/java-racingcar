@@ -5,6 +5,9 @@ import java.util.regex.Pattern;
 
 public class AdditionalString {
   private static final String DEFAULT_DELIMITER = ",|:";
+  private static final String EMPTY = "";
+  private static final Integer DELIMITER_INDEX = 1;
+  private static final Integer CONTENT_INDEX = 2;
 
   private final String value;
 
@@ -13,23 +16,23 @@ public class AdditionalString {
   }
 
   public String[] split() {
-    if (this.value.isEmpty()) return new String[]{};
+    if (this.value.isEmpty()) {
+      return new String[]{};
+    }
 
     Matcher matcher = Pattern.compile("//(.)\\n(.*)").matcher(this.value);
 
     String target = this.value;
-    String delimiter = DEFAULT_DELIMITER;
-    if(matcher.find()) {
-      delimiter += "|" + matcher.group(1);
-      target = matcher.group(2);
+    String delimiter = this.DEFAULT_DELIMITER;
+    if (matcher.find()) {
+      delimiter += "|" + matcher.group(this.DELIMITER_INDEX);
+      target = matcher.group(this.CONTENT_INDEX);
     }
 
     return target.split(delimiter);
   }
 
   private String emptyIfNull(String value) {
-    if (value == null) return "";
-
-    return value;
+    return value == null ? this.EMPTY : value;
   }
 }
